@@ -1,0 +1,24 @@
+{
+  "name": "bt2",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "bt2",
+    "khang"
+  ],
+  "homepage": "https://github.com/giakhang777/BT2-CNPMM#readme",
+  "bugs": {
+    "url": "https://github.com/giakhang777/BT2-CNPMM/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giakhang777/BT2-CNPMM.git"
+  },
+  "license": "ISC",
+  "author": "giakhang777",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
