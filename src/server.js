@@ -1,21 +1,33 @@
-const express = require('express'); //import express
-const bodyParser = require('body-parser'); //import body-parser
+const express = require('express');
+const path = require('path');
+const dotenv = require('dotenv');
+const routes = require('./routes/web');
+const { connectMongo } = require('./config/mongo');
 
-const viewEngine = require('./config/viewEngine.js');
-const initWebRoutes = require('./routes/web.js') ;
-const connectDB = require('./config/configDB.js');
-require('dotenv').config();
+dotenv.config();
 
-let app = express();
+const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-viewEngine(app);
-initWebRoutes(app);
-connectDB();
+// Parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-let port = process.env.PORT || 6969;
+// View engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// Routes
+routes(app);
+
+// Start server after Mongo connected
+(async () => {
+  try {
+    const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/node_fullstack';
+    await connectMongo(uri);
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+  } catch (e) {
+    console.error('❌ Mongo connection error:', e);
+    process.exit(1);
+  }
+})();
