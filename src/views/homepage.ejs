@@ -1,9 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head><meta charset="UTF-8"><title>Homepage</title></head>
+  <head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <style>
+      table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+      th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+      th { background-color: #f2f2f2; }
+    </style>
+  </head>
   <body>
     <h1>Homepage</h1>
-    <pre id="data"><%= data %></pre>
-    <a href="/crud">Go to CRUD</a> | <a href="/get-crud">List Users</a>
+
+    <% if (Array.isArray(data) && data.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(u => { %>
+            <tr>
+              <td><%= u.email %></td>
+              <td><%= (u.firstName || '') + ' ' + (u.lastName || '') %></td>
+              <td><%= u.phoneNumber || '' %></td>
+              <td><%= u.address || '' %></td>
+              <td><%= u.roleId || '' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No users found.</p>
+    <% } %>
+
+    <p>
+      <a href="/crud">Go to CRUD</a> | 
+      <a href="/get-crud">List Users</a>
+    </p>
   </body>
 </html>
