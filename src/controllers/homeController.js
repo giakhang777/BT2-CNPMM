@@ -5,7 +5,7 @@ const User = require('../models/user.mongo');
 async function getHomePage(req, res) {
   try {
     const data = await User.find({}).lean();
-    return res.render('homepage.ejs', { data: JSON.stringify(data) });
+    return res.render('homepage.ejs', { data });
   } catch (e) {
     console.error(e);
     return res.status(500).send('Server error');
